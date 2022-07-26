@@ -1,0 +1,19 @@
+{
+  "port": 8002,
+  "protocol": "http",
+  "name": "dynamic delay",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "inject": "<%-stringify(filename, 'dynamicDelay/delayPredicate.js' ) %>"
+        }
+      ],
+      "responses": [
+        {
+          "inject": "<%-stringify(filename, 'dynamicDelay/delayResponse.js' ) %>"
+        }
+      ]
+    }
+  ]
+}

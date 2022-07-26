@@ -1,0 +1,51 @@
+{
+  "port": 8001,
+  "protocol": "http",
+  "name": "Basic",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "and": [
+            {
+              "equals": {
+                "path": "/message",
+                "method": "GET"
+              }
+            },
+            {
+              "equals": {
+                "query": {
+                  "hello": "world"
+                }
+              }
+            },
+            {
+              "exists": {
+                "headers": {
+                  "x-request-code": true
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "headers": {
+              "HTTP-Response-Code-Text": "OK",
+              "Content-Type": "application/json",
+              "x-response-code": "1"
+            },
+            "body": {
+              "message": "Successful test"
+            },
+            "statusCode": "200"
+          }
+        }
+      ]
+    }
+    
+  ]
+}

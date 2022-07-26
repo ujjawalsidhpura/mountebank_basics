@@ -1,0 +1,88 @@
+{
+  "port": 8003,
+  "protocol": "http",
+  "name": "Main",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "and": [
+            {
+              "equals": {
+                "path": "/main",
+                "method": "POST"
+              }
+            },
+            {
+              "exists": {
+                "body": true
+              },
+              "jsonpath": {
+                "selector": "$.email"
+              }
+            },
+            {
+              "exists": {
+                "body": true
+              },
+              "jsonpath": {
+                "selector": "$.name"
+              }
+            },
+            {
+              "exists": {
+                "body": true
+              },
+              "jsonpath": {
+                "selector": "$.type"
+              }
+            }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "inject": "<%-stringify(filename, 'postRandomNum/response.js' ) %>"
+        }
+      ]
+    },
+    {
+      "predicates": [
+        {
+          "and": [
+            {
+              "equals": {
+                "path": "/main",
+                "method": "POST"
+              }
+            },
+            {
+              "exists": {
+                "body": false
+              },
+              "jsonpath": {
+                "selector": "$.type"
+              }
+            }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "headers": {
+              "HTTP-Response-Code-Text": "OK",
+              "Content-Type": "application/json",
+              "x-response-code": "1"
+            },
+            "body": {
+              "Default Response": "Error",
+              "Message": "Request body is empty/invalid. Please send a valid request body"
+            },
+            "statusCode": "200"
+          }
+        }
+      ]
+    }
+  ]
+}
